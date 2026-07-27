@@ -15,7 +15,14 @@ namespace S26Week12BlazorWithDb.Services
 
         public async Task<List<Product>> GetProductsAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products
+                                 .Include(p => p.Category)
+                                 .ToListAsync();
+        }
+
+        public async Task<List<Category>> GetCategoriesAsync()
+        {
+            return await _context.Categories.ToListAsync();
         }
 
         public async Task<Product?> GetProductByIdAsync(int id)
