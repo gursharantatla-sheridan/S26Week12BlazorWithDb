@@ -1,4 +1,6 @@
 using S26Week12BlazorWithDb.Components;
+using S26Week12BlazorWithDb.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace S26Week12BlazorWithDb
 {
@@ -11,6 +13,10 @@ namespace S26Week12BlazorWithDb
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+
+            // register the DbContext class as a service
+            string connStr = builder.Configuration.GetConnectionString("DefaultConnection")!;
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connStr));
 
             var app = builder.Build();
 
